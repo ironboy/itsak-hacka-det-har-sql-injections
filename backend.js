@@ -23,22 +23,6 @@ app.get('/api/products/:id', (req, res) => {
   `, 'all');
 });
 
-app.post('/api/products', (req, res) => {
-  run(res, `
-    INSERT INTO products (${Object.keys(req.body)}) 
-    VALUES (${Object.values(req.body).map(x => "'" + x + "'")})
-  `);
-});
-
-app.put('/api/products/:id', (req, res) => {
-  run(res, `
-    UPDATE products
-    SET ${Object.entries(req.body)
-      .map(([key, val]) => key + "= '" + val + "'")}
-    WHERE id = ${req.params.id}
-  `);
-});
-
 app.delete('/api/products/:id', (req, res) => {
   run(res, `
     DELETE FROM products
@@ -52,3 +36,19 @@ function run(res, query, type = 'run') {
 
 app.listen(port,
   () => console.log('Listening on http://localhost:' + port));
+
+/*app.post('/api/products', (req, res) => {
+  run(res, `
+    INSERT INTO products (${Object.keys(req.body)}) 
+    VALUES (${Object.values(req.body).map(x => "'" + x + "'")})
+  `);
+});
+
+app.put('/api/products/:id', (req, res) => {
+  run(res, `
+    UPDATE products
+    SET ${Object.entries(req.body)
+      .map(([key, val]) => key + "= '" + val + "'")}
+    WHERE id = ${req.params.id}
+  `);
+});*/
